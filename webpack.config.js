@@ -1,9 +1,10 @@
 var path = require('path');
+var webpack = require('webpack');
 
 module.exports = {
-	entry: [
-		'./src/index'
-	],
+	entry: {
+        app: ['./src/index']
+    },
 	output: {
 		path: path.join(__dirname, 'app/js'),
 		filename: 'bundle.js'
@@ -16,5 +17,8 @@ module.exports = {
 				exclude: /node_modules/
 			}
 		]
-	}
+	},
+    plugins: [
+        new webpack.HotModuleReplacementPlugin()
+    ]
 };

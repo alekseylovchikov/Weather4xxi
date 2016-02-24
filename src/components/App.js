@@ -3,7 +3,10 @@ import React, { Component } from 'react';
 import ReactDOM from 'react-dom';
 
 // Libs
-import geolocation from 'geolocation';
+let geocoderProvider = 'google';
+let httpAdapter = 'http';
+ 
+var geocoder = require('node-geocoder')(geocoderProvider, httpAdapter);
 
 // Components
 import SearchCity from './SearchCity';
@@ -14,19 +17,17 @@ export default class App extends Component {
 	constructor(props) {
 		super(props);
 		
-		let cityPosition = '', lon = 0, lat = 0;
+		let lon, lat;
 		
-		// get current position
-		geolocation.getCurrentPosition(function (err, position) {
-			if (err) throw err;
-		  
-			lon = parseInt(cityPosition.coords.longitude.toFixed(2));
-			lat = parseInt(cityPosition.coords.latitude.toFixed(2));
+		geocoder.reverse({ lat: 58, lon: 33 }, function(err, res) {
+		    console.log(res);
 		});
 
 		this.state = {
-			lon: lon,
-			lat: lat,
+			// lon: parseFloat(lon),
+			// lat: parseFloat(lat),
+			lon: 37,
+			lat: 55,
 			city: '',
 			temp: null
 		};
@@ -45,18 +46,18 @@ export default class App extends Component {
 						city: 'Moscow'
 					});
 					
-					// this.getWeatherByCityName();
+					this.getWeatherByCityName();
 				} else {
 					this.setState({
 						temp: data.main.temp,
 						city: data.name
 					});
 					
-					// this.getWeatherByCityName();
+					this.getWeatherByCityName();
 				}
 			}.bind(this),
 			error: function(xhr, status, error) {
-				alert('error:', error);
+				// alert('error:', error);
 			}
 		});
 	}
@@ -100,15 +101,13 @@ export default class App extends Component {
 	}
 
 	handleFormSubmit(city) {
-		this.setState({
-			city: city
-		}, function() {
+		this.setState({ city: city }, function() {
 			this.getWeatherByCityName();	
 		});
 	}
 
 	componentWillMount() {
-		this.getWeatherByGeoposition();
+		// this.getWeatherByGeoposition();
 	}
 
 	render() {
