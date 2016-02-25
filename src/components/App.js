@@ -107,7 +107,7 @@ export default class App extends Component {
 	}
 
 	componentWillMount() {
-		// this.getWeatherByGeoposition();
+		this.getWeatherByGeoposition();
 	}
 
 	render() {
@@ -118,8 +118,12 @@ export default class App extends Component {
 					<CityInfo city={this.state.city} temp={this.state.temp} />
 				</div>
 				<div className="col-md-6">
-					<h4>Добавленные города</h4>
+					<h4>Added city</h4>
 					<ul className="list-group">
+                        <li className="list-group-item">Borovichi <span className="pull-right"><a href="#">Delete</a></span></li>
+                        <li className="list-group-item">Moscow <span className="pull-right"><a href="#">Delete</a></span></li>
+                        <li className="list-group-item">SpB <span className="pull-right"><a href="#">Delete</a></span></li>
+                        <li className="list-group-item">Sochi <span className="pull-right"><a href="#">Delete</a></span></li>
 					</ul>
 				</div>
 			</div>
