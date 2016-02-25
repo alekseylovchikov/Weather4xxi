@@ -6,8 +6,11 @@ webpackConfig.entry.app.unshift("webpack-dev-server/client?http://localhost:8080
 var compiler = webpack(webpackConfig);
 var server = new webpackDevServer(compiler, {
     hot: true,
-    headers: { "Access-Control-Allow-Origin": "http://localhost:8080" },
-    publicPath: "http://localhost:8080/build"
+    historyApiFallback: false,
+    headers: { "Access-Control-Allow-Origin": "http://localhost:8080", "X-Custom-Header": "yes" },
+    stats: { colors: true },
 });
 
-server.listen(8080);
+server.listen(8080, 'localhost', function() {
+    
+});
